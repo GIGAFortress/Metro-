@@ -24,6 +24,7 @@ namespace 串口助手Metro
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }
