@@ -23,6 +23,8 @@
                 <DockPanel Height="26" Margin="0,3">
                     <Label Content="串口号" Margin="0,0.162,0,0" Width="48"/>
                     <ComboBox 
+                        SelectedValue ="{Binding Port.PortName}"
+                        Name="PortNameComboBox"
                         ItemsSource="{Binding PortNames}"
                         HorizontalAlignment="Left" 
                         Width="120" Margin="0,0,0,-0.4"/>
@@ -30,6 +32,8 @@
                 <DockPanel Height="26" Margin="0,3">
                     <Label Content="波特率" Margin="0,0.162,0,0" Width="48"/>
                     <ComboBox 
+                        SelectedItem="{Binding SelectedBaudRate}"
+                        Name="BaudRateComboBox"
                         ItemsSource="{Binding BaudRates}"
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Top" 
@@ -37,11 +41,19 @@
                 </DockPanel>
                 <DockPanel Height="26" Margin="0,3">
                     <Label Content="数据位" Margin="0,0.162,0,0" Width="48"/>
-                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding DataBits}"/>
+                    <ComboBox 
+                        SelectedItem="{Binding Port.DataBits}"
+                        Name="DataBitComboBox"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Width="120"
+                        ItemsSource="{Binding DataBits}"/>
                 </DockPanel>
                 <DockPanel Height="26" Margin="0,3">
                     <Label Content="校验位" Margin="0,0.162,0,0" Width="48"/>
                     <ComboBox 
+                        SelectedItem="{Binding SelectedParity}"
+                        Name="ParityComboBox"
                         ItemsSource="{Binding Parities}"
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Top"
@@ -49,9 +61,24 @@
                 </DockPanel>
                 <DockPanel Height="26" Margin="0,3">
                     <Label Content="停止位" Margin="0,0.162,0,0" Width="48"/>
-                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox 
+                        SelectedItem="{Binding Port.StopBits}"
+                        Name="StopBitCombobBox"
+                        ItemsSource="{Binding StopBits}"
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Bottom" 
+                        Width="120" 
+                        Margin="0,0,0,-0.4"/>
                 </DockPanel>
-                <Controls:ToggleSwitch VerticalAlignment="Top" OnLabel="ON" OffLabel="OFF" HorizontalAlignment="Left" Width="115" Margin="0,3"/>
+                <Controls:ToggleSwitch 
+                    Name="PortToggleSwitch"
+                    IsChecked="{Binding PortToggleSwitchIsChecked}"
+                    VerticalAlignment="Top" 
+                    OnLabel="ON" 
+                    OffLabel="OFF" 
+                    HorizontalAlignment="Left" 
+                    Width="115" 
+                    Margin="0,3" Checked="PortToggleSwitch_Click"/>
                 <CheckBox                    
                     Content="16进制通信" 
                     HorizontalAlignment="Left" 

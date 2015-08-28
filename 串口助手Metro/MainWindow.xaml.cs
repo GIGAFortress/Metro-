@@ -21,10 +21,22 @@ namespace 串口助手Metro
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        
         public MainWindow()
         {
             InitializeComponent();
+            PortNameComboBox.SelectedIndex = 0;
+            BaudRateComboBox.SelectedIndex = 3;
+            DataBitComboBox.SelectedIndex = 2;
+            ParityComboBox.SelectedIndex = 0;
+            StopBitCombobBox.SelectedIndex = 1;
             
+        }
+
+        private void PortToggleSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("点击了ToggleSwitch");
+
         }
     }
 }
