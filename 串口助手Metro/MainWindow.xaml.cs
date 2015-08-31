@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using System.Windows.Interactivity;
 
 namespace 串口助手Metro
 {
@@ -33,10 +34,12 @@ namespace 串口助手Metro
             
         }
 
-        private void PortToggleSwitch_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("点击了ToggleSwitch");
 
-        }
+
+        // private void PortToggleSwitch_Click(object sender, RoutedEventArgs e)
+        // {
+        //     MessageBox.Show("点击了ToggleSwitch");
+        //
+        // }
     }
 }

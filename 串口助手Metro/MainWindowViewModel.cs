@@ -7,13 +7,13 @@ using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.Commands;
 using System.Windows;
 using System.IO.Ports;
+using Microsoft.Practices.Prism.Interactivity;
 
 namespace 串口助手Metro
 {
     class MainWindowViewModel : BindableBase
     {
         private bool _IsHexCheckBox;
-
         public bool IsHexCheckBox
         {
             get { return _IsHexCheckBox; }
@@ -21,7 +21,6 @@ namespace 串口助手Metro
         }
 
         private string _ReceiveDataTextBox;
-
         public string ReceiveDataTextBox
         {
             get { return _ReceiveDataTextBox; }
@@ -29,7 +28,6 @@ namespace 串口助手Metro
         }
 
         private string _SendDataTextBox;
-
         public string SendDataTextBox
         {
             get { return _SendDataTextBox; }
@@ -37,13 +35,12 @@ namespace 串口助手Metro
         }
 
         private bool _ShowTimeCheckBox;
-
         public bool ShowTimeCheckBox
         {
             get { return _ShowTimeCheckBox; }
             set { _ShowTimeCheckBox = value; OnPropertyChanged("ShowTimeCheckBox"); }
         }
-        #region 串口设置相关的一系列属性        
+     
         public string[] PortNames { get { return SerialPort.GetPortNames(); } }
         
         private string[] _BaudRates = { "1200", "2400", "4800", "9600", "14400", "19200", "38400", "56000", "57600", "115200" };
@@ -55,15 +52,14 @@ namespace 串口助手Metro
         public string[] Parities { get { return Enum.GetNames(typeof(Parity)); } }
 
         public string[] StopBits { get { return Enum.GetNames(typeof(StopBits)); } }
-        #endregion
+      
         private bool _PortToggleSwitchIsChecked;
-
-        public bool PotrToggleSwitchIsChecked
+        public bool PortToggleSwitchIsChecked
         {
             get { return _PortToggleSwitchIsChecked; }
             set { _PortToggleSwitchIsChecked = value;OnPropertyChanged("PortToggleSwitch"); }
         }
-        #region 选择绑定属性 SelectedItem绑定用            
+       
         public string SelectedPortName
         {
             get { return Port.PortName; }
@@ -88,16 +84,13 @@ namespace 串口助手Metro
         {
             get { return Port.StopBits; }
             set { Port.StopBits = value; }
-        }
-        #endregion
+        }    
         
-        
-        
-
         public DelegateCommand ClearButtonCommand { get; set; }
         private void _ClearButtonCommand()
-        {            
-            ReceiveDataTextBox = string.Format("{0} {1} {2} {3} {4}",Port.PortName,Port.BaudRate,Port.DataBits,Port.Parity,Port.StopBits);
+        {
+            //ReceiveDataTextBox = string.Format("{0} {1} {2} {3} {4}",Port.PortName,Port.BaudRate,Port.DataBits,Port.Parity,Port.StopBits);
+            ReceiveDataTextBox = "";
         }
         public DelegateCommand SendButtonCommand { get; set; }
         private void _SendButtonCommand()
@@ -105,12 +98,24 @@ namespace 串口助手Metro
                        
         }
         
-        public SerialPort Port = new SerialPort();
+        public DelegateCommand ToggleSwitchCheckedEventCommand { get; set; }
+        private void _ToggleSwitchCheckedEventCommand()
+        {            
+            ReceiveDataTextBox = "Click & ToggleSwitchDelegateCommand";
+        }
 
+        public DelegateCommand ToggleSwitchUncheckedEventCommand { get; set; }
+        private void _ToggleSwitchUncheckedEventCommand()
+        {
+            ReceiveDataTextBox = "Unchecked Event Active";
+        }
+        public SerialPort Port = new SerialPort();
         public MainWindowViewModel()
         {            
             ClearButtonCommand = new DelegateCommand(_ClearButtonCommand);
             SendButtonCommand = new DelegateCommand(new Action(_SendButtonCommand));
+            ToggleSwitchCheckedEventCommand = new DelegateCommand(_ToggleSwitchCheckedEventCommand);
+            ToggleSwitchUncheckedEventCommand = new DelegateCommand(_ToggleSwitchUncheckedEventCommand);
         }
         
     }
