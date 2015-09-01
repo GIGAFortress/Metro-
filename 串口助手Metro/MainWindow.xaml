@@ -5,23 +5,23 @@
         xmlns:local="clr-namespace:串口助手Metro" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="串口助手Metro.MainWindow"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Title="串口" Height="550" Width="600" BorderThickness="0" EnableDWMDropShadow="True" MinWidth="600" MinHeight="550" Icon="ba.jpg">
-  
+
     <Controls:MetroWindow.DataContext>
         <local:MainWindowViewModel/>
     </Controls:MetroWindow.DataContext>
 
-    
+
     <Grid RenderTransformOrigin="0.496,0.491">
         <Grid.RowDefinitions>
             <RowDefinition Height="338*"/>
-            <RowDefinition Height="139*"/>
-            <RowDefinition Height="45.001"/>
+            <RowDefinition Height="135*"/>
+            <RowDefinition Height="49.6"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="69*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="设置" Margin="5">
+        <GroupBox Header="设置" Margin="5,5,5,4.6">
             <StackPanel>
                 <DockPanel Height="26" Margin="0,3">
                     <Label Content="串口号" Margin="0,0.162,0,0" Width="48"/>
@@ -89,7 +89,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Controls:ToggleSwitch>
-                    
+
                 <CheckBox                    
                     Content="16进制通信" 
                     HorizontalAlignment="Left" 
@@ -101,70 +101,90 @@
                     HorizontalAlignment="Left" 
                     VerticalAlignment="Top" 
                     Margin="0,3"/>
+                <Label x:Name="label1" Content="{Binding MessageLabel}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="179" Margin="0,5,0,0" FontSize="13.333" Foreground="#FF7D83FF"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Grid.Column="1" Header="接收框" Margin="5">
+        <GroupBox Grid.Column="1" Header="接收框" Margin="5,5,4.6,4.6">
             <Border BorderThickness="1" Margin="0">
                 <TextBox TextWrapping="Wrap" Text="{Binding ReceiveDataTextBox}" Margin="1"/>
             </Border>
         </GroupBox>
-        <GroupBox Header="发送框" Margin="5" Grid.Row="1" Grid.ColumnSpan="2">
+        <GroupBox Header="发送框" Margin="5,5.4,4.6,5.8" Grid.Row="1" Grid.ColumnSpan="2">
             <Grid Margin="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button 
-                    Content="发送" 
-                    HorizontalAlignment="Left" 
-                    Margin="115,0,0,0" 
-                    VerticalAlignment="Top" 
-                    Width="75" 
-                    Command="{Binding SendButtonCommand}"/>
-                <CheckBox Content="接收后发送" HorizontalAlignment="Left" VerticalAlignment="Top" FlowDirection="RightToLeft" Height="25.3" Margin="106,60.863,0,0"/>
                 <TextBox Margin="0" TextWrapping="Wrap" Text="{Binding SendDataTextBox}" Grid.Column="1"/>
-                <DockPanel Margin="93.6,30.3,5,10">
-                    <Label Content="定时" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="62.4"/>
-                </DockPanel>
+                <Grid Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="95"/>
+                        <ColumnDefinition Width="104.8"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="53.6"/>
+                        <RowDefinition Height="37.6"/>
+                    </Grid.RowDefinitions>
+                    <Button 
+                		Content="发送" 
+                		Margin="5.8,5,0,0" 
+                		Command="{Binding SendButtonCommand}" Grid.Column="1" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="89" VerticalContentAlignment="Center"/>
+                    <CheckBox Content="接收后发送" HorizontalAlignment="Left"
+                              VerticalAlignment="Top" 
+                              FlowDirection="RightToLeft" Height="25" 
+                              Margin="5.8,1.4,0,0" 
+                              Grid.Row="1" Grid.Column="1" Width="83"
+                              IsChecked="{Binding AfterReceiveSendCheckBox}"/>
+                    <TextBox x:Name="textBox" Margin="0,5,0,0" TextWrapping="Wrap" 
+                             Text="{Binding SendDataTimmerTextBox}" Height="30" VerticalAlignment="Top" 
+                             HorizontalAlignment="Left" Width="67" 
+                             VerticalContentAlignment="Center"                             />
+                    <Label x:Name="label" Content="定时" HorizontalAlignment="Left" Margin="0,1.4,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+                </Grid>
+
             </Grid>
         </GroupBox>
-        <StatusBar Margin="5,0,10,10" Grid.Row="2" Grid.ColumnSpan="2" Height="30" VerticalAlignment="Bottom">
-            <StatusBarItem Height="29" VerticalAlignment="Top">
-                <Button Content="清零" Width="75"/>
+        <StatusBar Margin="5,4.2,4.6,5.4" Grid.Row="2" Grid.ColumnSpan="2">
+            <StatusBarItem Height="40" VerticalAlignment="Top">
+                <Button Command="{Binding ClearCounterButtonCommand}"
+                    Content="清零" Width="75" Height="30"/>
             </StatusBarItem>
-            <StatusBarItem Height="29" VerticalAlignment="Top">
+            <StatusBarItem Height="40" VerticalAlignment="Top">
                 <TextBlock TextWrapping="Wrap"><Run Language="zh-cn" Text="接收："/></TextBlock>
             </StatusBarItem>
-            <StatusBarItem Height="29" VerticalAlignment="Top">
-                <TextBlock TextWrapping="Wrap"><Run Language="zh-cn" Text="00"/></TextBlock>
+            <StatusBarItem Height="40" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap">
+                    <Run Language="zh-cn" Text="{Binding ReceiveDataCounter}"/></TextBlock>
             </StatusBarItem>
-            <StatusBarItem Height="29" VerticalAlignment="Top">
+            <StatusBarItem Height="40" VerticalAlignment="Top">
                 <TextBlock TextWrapping="Wrap"><Run Language="zh-cn" Text="接收字节："/></TextBlock>
             </StatusBarItem>
-            <StatusBarItem Height="29" VerticalAlignment="Top">
-                <TextBlock TextWrapping="Wrap"><Run Language="zh-cn" Text="00"/></TextBlock>
+            <StatusBarItem Height="40" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap">
+                    <Run Language="zh-cn" Text="{Binding ReceiveDataCounterByte}"/></TextBlock>
             </StatusBarItem>
-            <StatusBarItem Height="29" VerticalAlignment="Top">
+            <StatusBarItem Height="40" VerticalAlignment="Top">
                 <TextBlock TextWrapping="Wrap"><Run Language="zh-cn" Text="发送："/></TextBlock>
             </StatusBarItem>
-            <StatusBarItem Height="29" VerticalAlignment="Top">
-                <TextBlock TextWrapping="Wrap"><Run Language="zh-cn" Text="00"/></TextBlock>
+            <StatusBarItem Height="40" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap">
+                    <Run Language="zh-cn" Text="{Binding SendDataCounter}"/></TextBlock>
             </StatusBarItem>
-            <StatusBarItem Height="29" VerticalAlignment="Top">
+            <StatusBarItem Height="40" VerticalAlignment="Top">
                 <TextBlock TextWrapping="Wrap"><Run Language="zh-cn" Text="发送字节："/></TextBlock>
             </StatusBarItem>
-            <StatusBarItem Height="29" VerticalAlignment="Top">
-                <TextBlock TextWrapping="Wrap"><Run Language="zh-cn" Text="00"/></TextBlock>
+            <StatusBarItem Height="40" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap">
+                    <Run Language="zh-cn" Text="{Binding SendDataCounterByte}"/></TextBlock>
             </StatusBarItem>
         </StatusBar>
         <Button 
             Command="{Binding ClearButtonCommand}"            
             Content="清空" 
             HorizontalAlignment="Left" 
-            Margin="115,259.7,0,0" 
+            Margin="115,260,0,0" 
             VerticalAlignment="Top" 
             Width="75" 
-            Height="25.3"/>
+            Height="25"/>
     </Grid>
 </Controls:MetroWindow>
