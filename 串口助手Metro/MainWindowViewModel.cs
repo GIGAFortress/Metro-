@@ -7,8 +7,9 @@ using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.Commands;
 using System.Windows;
 using System.IO.Ports;
-using System.Windows.Threading;
 using System.Windows.Documents;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace 串口助手Metro
 {
@@ -288,9 +289,9 @@ namespace 串口助手Metro
             ToggleSwitchCheckedEventCommand = new DelegateCommand(_ToggleSwitchCheckedEventCommand);
             ToggleSwitchUncheckedEventCommand = new DelegateCommand(_ToggleSwitchUncheckedEventCommand);
             ClearCounterButtonCommand = new DelegateCommand(_ClearCounterButtonCommand);
-            Port.DataReceived += new SerialDataReceivedEventHandler(Port_DataReceived);            
+            Port.DataReceived += Port_DataReceived;            
         }
-
+        Thread th1 = new Thread(DispatcherTesting);
         public delegate void UpdateBytesDelegate(byte[] data);
         public delegate void testing();
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -303,13 +304,17 @@ namespace 串口助手Metro
           //    data[i] = (byte)Port.ReadByte();
           //}
           ReceiveDataCounter++;
+            if (flag)
+            {
+                flag = false; th1.Start();
+            }
             //MessageBox.Show("接收数据");
             //Dispatcher.CurrentDispatcher.BeginInvoke(new UpdateBytesDelegate(UpdateBytesbox), data);
             //Dispatcher.CurrentDispatcher.BeginInvoke(new UpdateBytesDelegate(DispatcherTesting));
             //System.Threading.Thread.
         }
-
-        private void DispatcherTesting()
+        static bool flag = true;
+        private static void DispatcherTesting()
         {
             //throw new NotImplementedException();
             MessageBox.Show("来自Dispatcher.CurrentDispatcher.BeginInvoke(new UpdateBytesDelegate(DispatcherTesting));");
